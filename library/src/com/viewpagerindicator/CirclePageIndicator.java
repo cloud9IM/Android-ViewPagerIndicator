@@ -264,18 +264,22 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         //Draw the filled circle according to the current scroll
-        float cx = (mSnap ? mSnapPage : mCurrentPage) * threeRadius;
-        if (!mSnap) {
-            cx += mPageOffset * threeRadius;
+        int currentPage = mSnap ? mSnapPage : mCurrentPage;
+        for(int i  = 0; i <= currentPage; i++){
+        	float cx = i * threeRadius;
+            if (!mSnap) {
+                cx += mPageOffset * threeRadius;
+            }
+            if (mOrientation == HORIZONTAL) {
+                dX = longOffset + cx;
+                dY = shortOffset;
+            } else {
+                dX = shortOffset;
+                dY = longOffset + cx;
+            }
+            canvas.drawCircle(dX, dY, mRadius, mPaintFill);
         }
-        if (mOrientation == HORIZONTAL) {
-            dX = longOffset + cx;
-            dY = shortOffset;
-        } else {
-            dX = shortOffset;
-            dY = longOffset + cx;
-        }
-        canvas.drawCircle(dX, dY, mRadius, mPaintFill);
+        
     }
 
     public boolean onTouchEvent(android.view.MotionEvent ev) {
